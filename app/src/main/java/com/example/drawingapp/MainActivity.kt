@@ -3,6 +3,7 @@ package com.example.drawingapp
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 //import androidx.activity.compose.setContent
@@ -50,9 +51,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun showMain() {
         setContentView(R.layout.activity_main)
+        setDrawingFragment()
 //        setContent {
 //            setMainView()
 //        }
+    }
+
+    private fun setDrawingFragment() {
+        val drawingFragment = DrawingFragment()
+        findViewById<View>(R.id.FCV1)?.visibility = View.GONE
+        findViewById<View>(R.id.FCV2)?.visibility = View.GONE
+        findViewById<View>(R.id.FCV3)?.let {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.FCV3, drawingFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
     }
 
     @Composable

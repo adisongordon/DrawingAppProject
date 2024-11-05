@@ -18,10 +18,11 @@ import com.example.drawingapp.ui.main.MainViewModel
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         if (firstLaunch()) {
@@ -51,23 +52,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun showMain() {
         setContentView(R.layout.activity_main)
-        setDrawingFragment()
+        setListFragment()
 //        setContent {
 //            setMainView()
 //        }
     }
 
-    private fun setDrawingFragment() {
+    fun setDrawingFragment() {
         val drawingFragment = DrawingFragment()
-        findViewById<View>(R.id.FCV1)?.visibility = View.GONE
+        findViewById<View>(R.id.FCV1)?.visibility = View.VISIBLE
         findViewById<View>(R.id.FCV2)?.visibility = View.GONE
-        findViewById<View>(R.id.FCV3)?.let {
+        findViewById<View>(R.id.FCV3)?.visibility = View.GONE
+        findViewById<View>(R.id.FCV1)?.let {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.FCV3, drawingFragment)
+                .replace(R.id.FCV1, drawingFragment)
                 .addToBackStack(null)
                 .commit()
         }
 
+    }
+
+    private fun setListFragment() {
+        val listFragment = DrawingListFragment()
+        findViewById<View>(R.id.FCV1)?.visibility = View.GONE
+        findViewById<View>(R.id.FCV2)?.visibility = View.GONE
+        findViewById<View>(R.id.FCV3)?.let {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.FCV3, listFragment)
+                .commit()
+        }
     }
 
     @Composable

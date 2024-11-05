@@ -7,8 +7,4 @@
 
     <style name="Theme.DrawingApp" parent="Base.Theme.DrawingApp" />
 
-    <style name="splashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_image</item>
-        <item name="android:statusBarColor">@color/white</item>
-    </style>
 </resources>

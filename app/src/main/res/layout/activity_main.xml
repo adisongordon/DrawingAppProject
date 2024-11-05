@@ -4,12 +4,38 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/FCV"
-        android:name="com.example.drawingapp.DrawingFragment"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="100dp"
+        android:src="@drawable/logo" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <FrameLayout
+        android:id="@+id/FCV1"
+        android:layout_width="match_parent"
+        android:layout_height="380dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <FrameLayout
+        android:id="@+id/FCV2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <FrameLayout
+        android:id="@+id/FCV3"
+        android:layout_width="match_parent"
+        android:layout_height="625dp" />
 
 </LinearLayout>

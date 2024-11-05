@@ -1,8 +1,12 @@
 package com.example.drawingapp
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+//import androidx.activity.compose.setContent
+import androidx.compose.runtime.*
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.drawingapp.R
@@ -16,13 +20,43 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.Theme_DrawingApp)
         val binding = ActivityMainBinding.inflate(layoutInflater)
-        supportFragmentManager.commit{
-            replace<MainFragment>(R.id.FCV)
-        }
         setContentView(binding.root)
 
+        if (firstLaunch()) {
+            showSplash()
+        }
+        else {
+            showMain()
+        }
+    }
+
+    private fun firstLaunch(): Boolean {
+        val pref = getSharedPreferences("com.example.drawingapp", MODE_PRIVATE)
+        return pref.getBoolean("firstLaunch", true).also {
+            if (it) {
+                pref.edit().putBoolean("firstLaunch", false).apply()
+            }
+        }
+    }
+
+    private fun showSplash() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            runOnUiThread {
+                showMain()
+            }
+        }, 3000)
+    }
+
+    private fun showMain() {
+        setContentView(R.layout.activity_main)
+//        setContent {
+//            setMainView()
+//        }
+    }
+
+    @Composable
+    fun setMainView() {
 
     }
 }

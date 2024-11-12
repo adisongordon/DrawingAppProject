@@ -5,10 +5,27 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 
 class DrawingCanvasView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : View(context, attrs) {
+
+    private lateinit var viewModel: DrawingViewModel
+    //private val paint = Paint()
+
+    fun setViewModel(viewModel: DrawingViewModel) {
+        this.viewModel = viewModel
+
+        viewModel.bitmap.observe(context as LifecycleOwner, Observer<Bitmap> { bitmap ->
+            invalidate()
+        })
+        viewModel.selectedColor.observe(context as LifecycleOwner, Observer<Int> { color ->
+            // Update paint object with the new color
+            paint.color = color
+        })
+    }
 
     private var paint = Paint().apply {
         color = Color.BLACK

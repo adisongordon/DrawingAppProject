@@ -25,6 +25,6 @@ class PictureAdapter(private val pictures: List<String>) :
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
         holder.bind(pictures[position])
     }
-// Sizes the picture 
+// Sizes the picture
     override fun getItemCount(): Int = pictures.size
 }

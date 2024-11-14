@@ -32,31 +32,24 @@ class DrawingCanvasView @JvmOverloads constructor(
         strokeWidth = 10f
         style = Paint.Style.STROKE
     }
-    private var path = Path()
-    private val paths = mutableListOf<Pair<Path, Paint>>()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for ((p, paint) in paths) {
-            canvas.drawPath(p, paint)
+        viewModel.bitmap.value?.let {
+            canvas.drawBitmap(it, 0f, 0f, null)
         }
-        canvas.drawPath(path, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        val x = event.x
+        val y = event.y
+
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                path.moveTo(event.x, event.y)
-            }
-            MotionEvent.ACTION_MOVE -> {
-                path.lineTo(event.x, event.y)
-                invalidate()
-            }
-            MotionEvent.ACTION_UP -> {
-                paths.add(Pair(Path(path), Paint(paint)))
-                path.reset()
-            }
+            MotionEvent.ACTION_DOWN -> viewModel.start(x, y)
+            MotionEvent.ACTION_MOVE -> viewModel.move(x, y)
+            MotionEvent.ACTION_UP -> viewModel.up()
         }
+        invalidate()
         return true
     }
 

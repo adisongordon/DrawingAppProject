@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [DrawingEntity::class], version = 1)
 abstract class DrawingDatabase: RoomDatabase() {
-    abstract fun drawingDao(): DrawingDAO
+    abstract fun drawingDAO(): DrawingDAO
 
     companion object {
         @Volatile

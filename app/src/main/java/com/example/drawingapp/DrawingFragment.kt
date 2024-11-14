@@ -1,17 +1,12 @@
 package com.example.drawingapp
 
-import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.compose.ui.semantics.text
 import androidx.fragment.app.Fragment
-import androidx.compose.material3.Button
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.drawingapp.databinding.DrawingFragmentBinding
 import com.example.drawingapp.DrawingViewModel
@@ -29,7 +24,7 @@ class DrawingFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DrawingFragmentBinding.inflate(inflater, container, false)
         setupListeners()
         return binding.root
@@ -38,13 +33,14 @@ class DrawingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         drawingViewModel = ViewModelProvider(requireActivity()).get(DrawingViewModel::class.java)
-        val saveButton = view.findViewById<android.widget.Button>(R.id.btn_save)
+        val saveButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_save)
 
         saveButton.setOnClickListener {
             saveDrawing()
         }
     }
 
+    // Set up listeners
     private fun setupListeners() {
         binding.btnPen.setOnClickListener {
             binding.canvasView.setPenSize(10f)
@@ -55,6 +51,8 @@ class DrawingFragment : Fragment() {
             drawingViewModel.selectColor(0xFFFF0000.toInt())  // Example: Red color
         }
     }
+
+    // Set up ViewModel
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         drawingViewModel = ViewModelProvider(requireActivity()).get(DrawingViewModel::class.java)
@@ -65,19 +63,22 @@ class DrawingFragment : Fragment() {
 
     }
 
+    // Handle back button press
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    // Save drawing to RoomDB
     fun saveDrawing() {
         val currentBitmap = drawingViewModel.bitmap.value
         if (currentBitmap != null) {
-            // Upload this filename & currentBitmap to RoomDB
-            val filename = drawingViewModel.saveImage(requireContext(), currentBitmap)
+            val drawingTitle = binding.drawingTitle.text.toString() // Get title from EditText
+            val filename = drawingViewModel.saveImage(requireContext(), currentBitmap, drawingTitle) // Pass title
             val file = File(requireContext().filesDir, filename)
             drawingViewModel.fileNameList.add(filename)
-            drawingViewModel.insertIntoDB(requireContext(), filename, file.absolutePath)
+            drawingViewModel.insertIntoDB(requireContext(), filename, file.absolutePath) // Update insertIntoDB
+            Toast.makeText(requireContext(), "Drawing saved to $filename", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(requireContext(), "Error, No drawing to save", Toast.LENGTH_SHORT).show()
         }

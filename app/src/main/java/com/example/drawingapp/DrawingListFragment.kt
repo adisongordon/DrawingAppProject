@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -37,7 +40,7 @@ class DrawingListFragment : Fragment() {
     override fun onCreateView(
        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
    ): View {
-        viewModel.loadAllDrawings(requireContext())
+        viewModel.loadDrawings(requireContext())
 
         return ComposeView(requireContext()).apply {
             setContent {
@@ -67,31 +70,49 @@ class DrawingListFragment : Fragment() {
                         .fillMaxWidth()
                         .padding(bottom = 70.dp)
                 ) {
-                    items(bitmaps.value) { bitmap ->
-                        BitmapItem(bitmap) { onNewDrawing() }
+                    items(bitmaps.value) { bitmapAndTitle -> // Iterate over pairs
+                        BitmapItem(bitmapAndTitle) { onNewDrawing() }
                     }
                 }
             }
         }
     }
 
+    // Create a composable function to display each bitmap
     @Composable
-    fun BitmapItem(bitmap: Bitmap, onClick: () -> Unit) {
+    fun BitmapItem(bitmapAndTitle: Pair<Bitmap, String>, onClick: () -> Unit) {
         Card(
-            border = BorderStroke(1.dp, Color.Black),
+            border = BorderStroke(0.25.dp, Color.Black),
             modifier = Modifier
                 .padding(10.dp)
-                .size(120.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
+                .size(120.dp), // Adjust size as needed
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            colors = CardDefaults.cardColors(Color.LightGray)
         ) {
-            val imageBitmap = bitmap.asImageBitmap()
-
-            Image(
-                bitmap = imageBitmap,
-                contentDescription = null,
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-            )
+                    .fillMaxWidth() // Fill card width
+                    .wrapContentSize(Alignment.Center) // Wrap content, center aligned
+                    .background(Color.White)
+            ) {
+                val imageBitmap = bitmapAndTitle.first.asImageBitmap()
+
+                Image(
+                    bitmap = imageBitmap,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f) // Maintain aspect ratio, adjust as needed
+                )
+
+                Text(
+                    text = bitmapAndTitle.second,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+            }
         }
     }
 }

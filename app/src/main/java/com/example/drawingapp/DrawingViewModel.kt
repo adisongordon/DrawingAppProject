@@ -65,7 +65,7 @@ class DrawingViewModel : ViewModel() {
 
     // Save image and return filename(String) for storing to RoomDB
     fun saveImage(context: Context, bitmap: Bitmap, drawingTitle: String): String {
-        val filename = "${drawingTitle}.png" // Include title
+        val filename = "${drawingTitle}_${System.currentTimeMillis()}.png" // Include title
         context.openFileOutput(filename, Context.MODE_PRIVATE).use { fos ->
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
         }

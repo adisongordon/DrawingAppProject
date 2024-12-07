@@ -6,6 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +26,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.drawingapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.example.drawingapp.DrawingFragment
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
+import com.google.firebase.auth.ktx.auth
+
 
 class MainFragment : Fragment() {
 // Creates all of the instances of the buttons and recyclerview
@@ -71,4 +89,6 @@ class MainFragment : Fragment() {
     private fun handleDelete() {
         // Handles delete functionality
     }
+
+
 }

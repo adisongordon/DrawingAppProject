@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     // For RoomDB
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services") version "4.4.2" apply false
 }
 
 android {
@@ -58,6 +59,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.google.android.material:material:1.11.0")
+    implementation ("androidx.activity:activity-compose:1.4.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -93,5 +95,12 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-web:3.6.1")
     androidTestImplementation("androidx.test.espresso.idling:idling-concurrent:3.6.1")
     androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.6.1")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-common-ktx:21.0.0")
+    implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.11.1")
+
 
 }

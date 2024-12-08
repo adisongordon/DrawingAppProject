@@ -10,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,18 +42,37 @@ class DrawingListFragment : Fragment() {
     override fun onCreateView(
        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
    ): View {
+        val userId = arguments?.getString("userId") ?: return ComposeView(requireContext())
         viewModel.loadDrawings(requireContext())
 
         return ComposeView(requireContext()).apply {
             setContent {
-                DrawingListScreen(viewModel, {})
+                DrawingListScreen(viewModel, userId, {}, {
+                    (activity as? MainActivity)?.logout()})
             }
         }
    }
 
     @Composable
-    fun DrawingListScreen(viewModel: DrawingViewModel, onNewDrawing: () -> Unit) {
+    fun DrawingListScreen(viewModel: DrawingViewModel, userId: String, onNewDrawing: () -> Unit, onLogout: () -> Unit) {
         Column(modifier = Modifier.fillMaxSize()) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            ) {
+                Text(
+                    text = "$userId",
+                    modifier = Modifier.weight(1f)
+                )
+                Button(
+                    onClick = onLogout,
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    Text("Logout")
+                }
+            }
             Box(modifier = Modifier.fillMaxSize()) {
                 Button(
                     onClick = { (activity as? MainActivity)?.setDrawingFragment() },

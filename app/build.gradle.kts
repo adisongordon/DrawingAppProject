@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     // For RoomDB
     id("com.google.devtools.ksp")
-    id("com.google.gms.google-services") version "4.4.2" apply false
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -102,5 +102,5 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
     implementation("com.google.firebase:firebase-firestore-ktx:24.11.1")
 
-
+    apply(plugin = "com.google.gms.google-services")
 }

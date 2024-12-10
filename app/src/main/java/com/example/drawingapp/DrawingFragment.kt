@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.compose.ui.semantics.text
 import androidx.fragment.app.Fragment
@@ -26,7 +27,7 @@ class DrawingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DrawingFragmentBinding.inflate(inflater, container, false)
-        setupListeners()
+
         return binding.root
     }
 
@@ -34,6 +35,8 @@ class DrawingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         drawingViewModel = ViewModelProvider(requireActivity()).get(DrawingViewModel::class.java)
         val saveButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_save)
+        setupListeners(view)
+        shareDrawing(view)
 
         saveButton.setOnClickListener {
             saveDrawing()
@@ -41,14 +44,21 @@ class DrawingFragment : Fragment() {
     }
 
     // Set up listeners
-    private fun setupListeners() {
-        binding.btnPen.setOnClickListener {
+    private fun setupListeners(view: View) {
+        val colorBtn: Button = view.findViewById(R.id.btn_color)
+        val sizeBtn: Button = view.findViewById(R.id.btn_pen)
+        val eraseBtn: Button = view.findViewById(R.id.btn_eraser)
+        sizeBtn.setOnClickListener {
             binding.canvasView.setPenSize(10f)
-            binding.canvasView.setPenColor(drawingViewModel.selectedColor.value ?: 0xFF000000.toInt())
+
+            //binding.canvasView.setPenColor(drawingViewModel.selectedColor.value ?: 0xFF000000.toInt())
         }
 
-        binding.btnColor.setOnClickListener {
-            drawingViewModel.selectColor(0xFFFF0000.toInt())  // Example: Red color
+        colorBtn.setOnClickListener {
+            drawingViewModel.selectColor(0x00000000.toInt())  // Example: Red color
+        }
+        eraseBtn.setOnClickListener {
+            drawingViewModel.selectColor(0xFFFFFFFF.toInt())  // Example: Red color
         }
     }
 
@@ -81,6 +91,13 @@ class DrawingFragment : Fragment() {
             Toast.makeText(requireContext(), "Drawing saved to $filename", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(requireContext(), "Error, No drawing to save", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun shareDrawing(view: View) {
+        val shareButton: Button = view.findViewById(R.id.btn_share)
+        shareButton.setOnClickListener{
+            Toast.makeText(context, "Image has been shared", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -26,28 +26,29 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/btn_pen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pen" />
-
-        <Button
-            android:id="@+id/btn_brush"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Brush" />
-
-        <Button
-            android:id="@+id/btn_eraser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Eraser" />
-
-        <Button
             android:id="@+id/btn_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Color" />
+        <Button
+            android:id="@+id/btn_pen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Size" />
+        <Button
+            android:id="@+id/btn_eraser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Erase" />
+        <Button
+            android:id="@+id/btn_brush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shape" />
+
+
+
+
 
     </LinearLayout>
     <LinearLayout
@@ -60,6 +61,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save" />
+        <Button
+            android:id="@+id/btn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share" />
     </LinearLayout>
 
 

@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity() {
             }
             findViewById<View>(R.id.FCV3)?.let {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.FCV3, listFragment)
+                    .replace(R.id.FCV3, fragment)
                     .commit()
             }
         }
